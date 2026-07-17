@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="10">
+    <title>Redirecting...</title>
+</head>
+<body>
+    <p>Checking office hours...</p>
+
+    <script>
+        // Get the current date/time in Central Time
+        const now = new Date();
+
+        const centralTime = new Intl.DateTimeFormat("en-US", {
+            timeZone: "America/Chicago",
+            weekday: "short",
+            hour: "numeric",
+            hour12: false
+        }).formatToParts(now);
+
+        const weekday = centralTime.find(p => p.type === "weekday").value;
+        const hour = parseInt(
+            centralTime.find(p => p.type === "hour").value,
+            10
+        );
+
+        const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri"];
+
+        const isWeekday = weekdays.includes(weekday);
+        const isOfficeHours = hour >= 9 && hour < 12;
+
+        if (isWeekday && isOfficeHours) {
+            window.location.href = "officehours.html";
+        } else {
+            window.location.href = "closed.html";
+        }
+    </script>
+</body>
+</html>
